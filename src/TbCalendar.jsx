@@ -11,18 +11,17 @@ import TbTimeFooter from './taobao-calendar-warp/TimeFooter';
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 import "./taobao-calendar-warp/my-calendar.css"
+import MonthCalendar from "./MonthCalendar";
 class TbCalendar extends React.Component {
     static propTypes = {
         defaultValue: PropTypes.string,
         format:PropTypes.string,
         onChange:PropTypes.func,
-        showTime:PropTypes.bool
     }
     static defaultProps = {
         defaultValue: null,
         format:"YYYY-MM-DD HH:mm:ss",
-        onChange:()=>{},
-        showTime:true
+        onChange:()=>{}
     }
 
     constructor(props) {
@@ -32,8 +31,14 @@ class TbCalendar extends React.Component {
             value: props.defaultValue && moment(props.defaultValue,props.format),
             timePosition: "hour" //hour min second
         };
+        if(this.props.format == "YYYY")
+        {
+            throw "不支持年份选择框";
+        }
+
         this.onChangeTimePosition = this.onChangeTimePosition.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.isShowTime = this.isShowTime.bind(this);
     }
 
     onChange = (value) => {
@@ -48,6 +53,19 @@ class TbCalendar extends React.Component {
         this.setState({"timePosition":timePosition,"onCloseTimePicker":onCloseTimePicker});
     }
 
+    isShowTime()
+    {
+        return this.props.format.indexOf("HH")!=-1
+    }
+
+    isMoth()
+    {
+        let format = this.props.format;
+        return format.indexOf("DD")==-1 && format.indexOf("HH")==-1 &&
+               format.indexOf("mm")==-1 && format.indexOf("ss")==-1 &&
+               format.indexOf("YYYY")!=-1 && format.indexOf("MM")!=-1
+    }
+
     render() {
         const state = this.state;
 
@@ -57,23 +75,30 @@ class TbCalendar extends React.Component {
 
         const renderFooter = (argumes) => {
             return (
-                <TbTimeFooter {...argumes} onChangeTimePosition={this.onChangeTimePosition} />
+                <TbTimeFooter {...argumes} format={this.props.format} onChangeTimePosition={this.onChangeTimePosition} />
             )
         }
+
+
 
         const defaultValue = this.props.defaultValue && moment(this.props.defaultValue, this.props.format)
                              || null;
 
-        const calendar = (<Calendar
+
+
+        const calendar = (this.isMoth()? (<MonthCalendar
+            locale={zhCN}
+            style={{zIndex: 1000}}
+        />):(<Calendar
             locale={zhCN}
             style={{ zIndex: 1000 }}
             dateInputPlaceholder="请选择"
             formatter={self.props.format}
-            timePicker={self.props.showTime?timePickerElement:null}
+            timePicker={self.isShowTime()?timePickerElement:null}
             defaultValue={defaultValue}
             showDateInput={true}
-            renderFooter={self.props.showTime?renderFooter:()=>{}}
-        />);
+            renderFooter={self.isShowTime()?renderFooter:()=>{}}
+        />));
         return (
                 <DatePicker
                     animation="slide-up"
@@ -88,8 +113,9 @@ class TbCalendar extends React.Component {
                                 <div  className="form_datetime">
                                     <input className="form-control form-control-inline"
                                         type="text"
+                                           readOnly={true}
                                         value={value && value.format(self.props.format) || ''}
-                                        inline
+                                           onChange={e=>{}}
                                     />
                                     <label className="icon-th add-on fa fa-calendar"></label>
                                 </div>

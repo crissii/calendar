@@ -14,7 +14,7 @@ ReactDOM.render((<div
 >
   <div>
     <div style={{ float: 'left', width: 300 }}>
-      <TbCalendar showTime={true} defaultValue="2017-12-31 12:01:02" format="YYYY-MM-DD HH:mm:ss"/>
+      <TbCalendar showTime={true} defaultValue="2017-12-31 12" format="YYYY-MM-DD HH:mm"/>
     </div>
   </div>
 </div>), document.getElementById('__react-content'));

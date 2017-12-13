@@ -7,11 +7,11 @@ class TimeFooter extends React.Component {
     this.clickInput = this.clickInput.bind(this);
     this.inputValue = this.inputValue.bind(this);
     this.changeValue = this.changeValue.bind(this);
+    this.isShow = this.isShow.bind(this);
 
   }
 
   componentWillMount() {
-    let current = this.props.value;
   }
 
   inputValue(timePosition) {
@@ -57,16 +57,21 @@ class TimeFooter extends React.Component {
     this.props.onOpenTimePicker();
   }
 
+  isShow(key)
+  {
+     return this.props.format.indexOf(key)!=-1?"visible":"hidden"
+  }
+
   render() {
     return (<span className="rc-calendar-time">
-            <input className="rc-calendar-time-input" value={this.inputValue("hour")} onFocus={() => {
-              this.clickInput("hour")
-            }}
-                   onChange={e => {
-                     this.changeValue("hour", e.target.value)
-                   }}
-                   title="上一小时(上方向键), 下一小时(下方向键)"/>
-            <span className="rc-calendar-time-minute">
+      <input style={{visibility:this.isShow("HH")}} className="rc-calendar-time-input" value={this.inputValue("hour")} onFocus={() => {
+        this.clickInput("hour")
+      }}
+              onChange={e => {
+                this.changeValue("hour", e.target.value)
+              }}
+              title="上一小时(上方向键), 下一小时(下方向键)"/>
+      <span style={{visibility:this.isShow("mm")}} className="rc-calendar-time-minute">
                 <span> : </span>
                 <input className="rc-calendar-time-input"
                        value={this.inputValue("min")}
@@ -78,7 +83,7 @@ class TimeFooter extends React.Component {
                        }}
                        title="上一分钟(上方向键), 下一分钟(下方向键)"/>
             </span>
-            <span className="rc-calendar-time-second">
+      <span style={{visibility:this.isShow("ss")}} className="rc-calendar-time-second">
                 <span> : </span>
                 <input className="rc-calendar-time-input"
                        value={this.inputValue("second")}
