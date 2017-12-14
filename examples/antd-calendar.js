@@ -9,7 +9,7 @@ class InputControlES5 extends React.Component{
   constructor()
   {
     super();
-    this.state = {value:"2017-12-29 20:54"}
+    this.state = {value:"2017-12"}
   }
   handleChange(v) { this.setState({ value: v }) }
 
@@ -17,7 +17,7 @@ class InputControlES5 extends React.Component{
     return ( <TbCalendar disabled={false}
                          onChange={(v)=>{this.handleChange(v)}}
                          value={this.state.value}
-                         format="YYYY-MM-DD HH:mm"/>
+                         format="YYYY-MM"/>
 
     );
   }

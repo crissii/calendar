@@ -82,6 +82,8 @@ class TbCalendar extends React.Component {
 
         const calendar = (this.isMoth()? (<MonthCalendar
             locale={zhCN}
+            defaultValue={v}
+            onSelect={(v) =>{onChange && onChange(v && v.format(format) || "")}}
             style={{zIndex: 1000}}
         />):(<Calendar
             locale={zhCN}
