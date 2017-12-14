@@ -1,2 +1,2 @@
-import Calendar from './src/';
-export default Calendar;
+import TbCalendar from './src/';
+export default TbCalendar;

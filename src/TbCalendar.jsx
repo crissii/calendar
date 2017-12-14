@@ -13,22 +13,17 @@ import 'moment/locale/zh-cn';
 import "./taobao-calendar-warp/my-calendar.css"
 import MonthCalendar from "./MonthCalendar";
 class TbCalendar extends React.Component {
-    static propTypes = {
-        defaultValue: PropTypes.string,
-        format:PropTypes.string,
-        onChange:PropTypes.func,
-    }
     static defaultProps = {
-        defaultValue: null,
+        value:"",
         format:"YYYY-MM-DD HH:mm:ss",
-        onChange:()=>{}
+        onChange:()=>{},
+        disabled:false
     }
 
     constructor(props) {
         super(props);
 
         this.state = {
-            value: props.defaultValue && moment(props.defaultValue,props.format),
             timePosition: "hour" //hour min second
         };
         if(this.props.format == "YYYY")
@@ -45,7 +40,7 @@ class TbCalendar extends React.Component {
         this.setState({
                           value,
                       });
-        this.props.onChange && this.props.onChange(value && value.format(this.props.format) || "");
+        //this.props.onChange && this.props.onChange(value && value.format(this.props.format) || "");
     }
 
     onChangeTimePosition(timePosition,onCloseTimePicker)
@@ -55,12 +50,13 @@ class TbCalendar extends React.Component {
 
     isShowTime()
     {
-        return this.props.format.indexOf("HH")!=-1
+        let format = this.props.format?this.props.format:"YYYY-MM-DD HH:mm:ss";
+        return format.indexOf("HH")!=-1
     }
 
     isMoth()
     {
-        let format = this.props.format;
+        let format = this.props.format?this.props.format:"YYYY-MM-DD HH:mm:ss";
         return format.indexOf("DD")==-1 && format.indexOf("HH")==-1 &&
                format.indexOf("mm")==-1 && format.indexOf("ss")==-1 &&
                format.indexOf("YYYY")!=-1 && format.indexOf("MM")!=-1
@@ -72,19 +68,17 @@ class TbCalendar extends React.Component {
         const timePickerElement = <TbTimePicker {...state} />;
 
         const self = this;
+        let {value = "",format = "YYYY-MM-DD HH:mm:ss", onChange = ()=>{}, disabled = false,
+            type,readOnly,...others} = this.props;
 
         const renderFooter = (argumes) => {
             return (
-                <TbTimeFooter {...argumes} format={this.props.format} onChangeTimePosition={this.onChangeTimePosition} />
+                <TbTimeFooter {...argumes} format={format}
+                              onChangeTimePosition={this.onChangeTimePosition} />
             )
         }
 
-
-
-        const defaultValue = this.props.defaultValue && moment(this.props.defaultValue, this.props.format)
-                             || null;
-
-
+        const v = value && moment(value, format) || null;
 
         const calendar = (this.isMoth()? (<MonthCalendar
             locale={zhCN}
@@ -93,29 +87,28 @@ class TbCalendar extends React.Component {
             locale={zhCN}
             style={{ zIndex: 1000 }}
             dateInputPlaceholder="请选择"
-            formatter={self.props.format}
+            formatter={format}
             timePicker={self.isShowTime()?timePickerElement:null}
-            defaultValue={defaultValue}
+            defaultValue={v}
             showDateInput={true}
+            onSelect={(v) =>{onChange && onChange(v && v.format(format) || "")}}
             renderFooter={self.isShowTime()?renderFooter:()=>{}}
         />));
         return (
                 <DatePicker
-                    animation="slide-up"
-                    disabled={state.disabled}
+                    disabled={disabled}
                     calendar={calendar}
-                    value={state.value}
+                    value={v}
                     onChange={this.onChange}
                 >
                     {
                         ({ value }) => {
                             return (
-                                <div  className="form_datetime">
+                                <div  className="form_datetime" style = {others.style}>
                                     <input className="form-control form-control-inline"
-                                        type="text"
-                                           readOnly={true}
-                                        value={value && value.format(self.props.format) || ''}
-                                           onChange={e=>{}}
+                                           {...others}
+                                        type="text" readOnly={true}
+                                        value={value && value.format(format) || ''}
                                     />
                                     <label className="icon-th add-on fa fa-calendar"></label>
                                 </div>

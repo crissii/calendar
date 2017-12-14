@@ -32,7 +32,7 @@ class TimeFooter extends React.Component {
   }
 
   changeValue(timePosition, v) {
-    let s = this.props.selectedValue.clone();
+    let s = this.props.selectedValue && this.props.selectedValue.clone();
     if (!s) {
       s = moment();
       s.hour(0);

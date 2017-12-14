@@ -35,9 +35,8 @@ npm install --save 'rc-calendar-tbtime'
 ## Usage
 
 ```js
-import Calendar from 'rc-calendar-tbtime';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import TbCalendar from "rc-calendar-tbtime/dist/rc-calendar";
+import "rc-calendar-tbtime/dist/rc-calendar.css";
 ReactDOM.render(<TbCalendar />, container);
 ```
 ## 属性说明
@@ -53,9 +52,9 @@ ReactDOM.render(<TbCalendar />, container);
     </thead>
     <tbody>
         <tr>
-          <td>defaultValue</td>
+          <td>value</td>
           <td>String</td>
-          <td>【可选】默认值，注意要根据format格式赋值</td>
+          <td>【必填】只支持受控组件，value要跟状态值绑定</td>
         </tr>
         <tr>
           <td>format</td>
@@ -65,7 +64,12 @@ ReactDOM.render(<TbCalendar />, container);
          <tr>
           <td>onChange</td>
           <td>function</td>
-          <td>【可选】变更函数，入参为format格式日期字符串</td>
+          <td>【必填】变更函数，入参为format格式日期字符串</td>
+         </tr>
+         <tr>
+          <td>disabled</td>
+          <td>boolean</td>
+          <td>【可选】是否只读，默认false</td>
          </tr>
     </tbody>
 </table>

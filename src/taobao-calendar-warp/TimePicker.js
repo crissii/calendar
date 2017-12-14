@@ -99,7 +99,6 @@ class Panel extends React.Component {
       format, defaultOpenValue, clearText, onEsc, addon, use12Hours, onClear,
       focusOnOpen, onKeyDown, hourStep, minuteStep, secondStep, timePosition
     } = this.props;
-    console.info(defaultOpenValue);
 
    let {current,label,arr,selected} = this.getMetaData();
 

@@ -4,17 +4,25 @@ import ReactDOM from 'react-dom';
 
 import TbCalendar from "../src/TbCalendar";
 
-ReactDOM.render((<div
-  style={{
-    zIndex: 1000,
-    position: 'relative',
-    width: 900,
-    margin: '20px auto',
-  }}
->
-  <div>
-    <div style={{ float: 'left', width: 300 }}>
-      <TbCalendar showTime={true} defaultValue="2017-12-31 12" format="YYYY-MM-DD HH:mm"/>
-    </div>
-  </div>
-</div>), document.getElementById('__react-content'));
+
+class InputControlES5 extends React.Component{
+  constructor()
+  {
+    super();
+    this.state = {value:"2017-12-29 20:54"}
+  }
+  handleChange(v) { this.setState({ value: v }) }
+
+  render(){
+    return ( <TbCalendar disabled={false}
+                         onChange={(v)=>{this.handleChange(v)}}
+                         value={this.state.value}
+                         format="YYYY-MM-DD HH:mm"/>
+
+    );
+  }
+
+}
+
+
+ReactDOM.render(<InputControlES5 />, document.getElementById('__react-content'));

@@ -1,3 +1,3 @@
-import Calendar from './Calendar';
+import TbCalendar from './TbCalendar';
 
-export default Calendar;
+export default TbCalendar;
