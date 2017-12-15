@@ -2,7 +2,7 @@ export default {
   today: '今天',
   now: '此刻',
   backToToday: '返回今天',
-  ok: '确定',
+  ok: '关闭',
   timeSelect: '选择时间',
   dateSelect: '选择日期',
   clear: '清除',

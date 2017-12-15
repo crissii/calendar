@@ -29,7 +29,7 @@ React Calendar(增加淘宝时间选择)
 ## install
 
 ```
-npm install --save 'rc-calendar-tbtime'
+npm install --save rc-calendar-tbtime
 ```
 
 ## Usage
@@ -37,6 +37,8 @@ npm install --save 'rc-calendar-tbtime'
 ```js
 import TbCalendar from "rc-calendar-tbtime/dist/rc-calendar";
 import "rc-calendar-tbtime/dist/rc-calendar.css";
+class demo extend
+
 ReactDOM.render(<TbCalendar />, container);
 ```
 ## 属性说明
