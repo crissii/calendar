@@ -35,11 +35,32 @@ npm install --save rc-calendar-tbtime
 ## Usage
 
 ```js
+import React from 'react';
+import ReactDOM from 'react-dom';
 import TbCalendar from "rc-calendar-tbtime/dist/rc-calendar";
 import "rc-calendar-tbtime/dist/rc-calendar.css";
-class demo extend
 
-ReactDOM.render(<TbCalendar />, container);
+class Demo extends React.Component{
+  constructor()
+  {
+    super();
+    this.state = {value:"2017-12"}
+  }
+  handleChange(v) { this.setState({ value: v }) }
+
+  render(){
+    return ( <TbCalendar disabled={false}
+                         onChange={(v)=>{this.handleChange(v)}}
+                         value={this.state.value}
+                         format="YYYY-MM"/>
+
+    );
+  }
+
+}
+
+
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
 ```
 ## 属性说明
 

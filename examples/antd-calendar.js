@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import TbCalendar from "../src/TbCalendar";
 
 
-class InputControlES5 extends React.Component{
+class Demo extends React.Component{
   constructor()
   {
     super();
@@ -25,4 +25,4 @@ class InputControlES5 extends React.Component{
 }
 
 
-ReactDOM.render(<InputControlES5 />, document.getElementById('__react-content'));
+ReactDOM.render(<Demo />, document.getElementById('__react-content'));
