@@ -38,7 +38,35 @@ class Panel extends React.Component {
       value.second(item)
     }
     this.props.onChange(value);
-    this.props.onCloseTimePicker();
+
+    if(timePosition=="hour")
+    {
+      if(this.props.format.indexOf("mm")==-1)
+      {
+        this.props.onCloseTimePicker();
+      }else {
+        this.props.onChangeTimePosition("min", this.props.onCloseTimePicker)
+      }
+
+    }
+
+    if(timePosition=="min")
+    {
+      if(this.props.format.indexOf("ss")==-1)
+      {
+        this.props.onCloseTimePicker();
+      }else {
+        this.props.onChangeTimePosition("second", this.props.onCloseTimePicker)
+      }
+
+    }
+
+    if(timePosition == "second")
+    {
+      this.props.onCloseTimePicker();
+    }
+
+    //
   }
 
   getMetaData()

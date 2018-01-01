@@ -62,14 +62,20 @@ class TbCalendar extends React.Component {
                format.indexOf("YYYY")!=-1 && format.indexOf("MM")!=-1
     }
 
+
+
     render() {
         const state = this.state;
 
-        const timePickerElement = <TbTimePicker {...state} />;
 
         const self = this;
         let {value = "",format = "YYYY-MM-DD HH:mm:ss", onChange = ()=>{}, disabled = false,
             type,readOnly,...others} = this.props;
+
+        const timePickerElement = <TbTimePicker format={format}
+                                                {...state}
+                                                onChangeTimePosition={this.onChangeTimePosition} />;
+
 
         const renderFooter = (argumes) => {
             return (
@@ -80,7 +86,7 @@ class TbCalendar extends React.Component {
 
         const v = value && moment(value, format) || null;
 
-        const calendar = (this.isMoth()? (<MonthCalendar
+        let calendar = (this.isMoth()? (<MonthCalendar
             locale={zhCN}
             defaultValue={v}
             onSelect={(v) =>{onChange && onChange(v && v.format(format) || "")}}
@@ -96,6 +102,7 @@ class TbCalendar extends React.Component {
             onSelect={(v) =>{onChange && onChange(v && v.format(format) || "")}}
             renderFooter={self.isShowTime()?renderFooter:()=>{}}
         />));
+
         return (
                 <DatePicker
                     disabled={disabled}

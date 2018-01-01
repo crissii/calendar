@@ -17,7 +17,7 @@ class Demo extends React.Component{
     return ( <TbCalendar disabled={false}
                          onChange={(v)=>{this.handleChange(v)}}
                          value={this.state.value}
-                         format="YYYY-MM"/>
+                         format="YYYY-MM-DD"/>
 
     );
   }

@@ -130,6 +130,10 @@ const CalendarHeader = createReactClass({
   showDecadePanel() {
     this.props.onPanelChange(null, 'decade');
   },
+  isTime(){
+      let format = this.props.format?this.props.format:"YYYY-MM-DD HH:mm:ss";
+      return format.indexOf("YYYY")==-1 && format.indexOf("MM")==-1 && format.indexOf("DD")==-1
+  },
 
   render() {
     const { props } = this;
@@ -182,8 +186,8 @@ const CalendarHeader = createReactClass({
       );
     }
 
-
-    return (<div className={`${prefixCls}-header`}>
+    let display = this.isTime()?"visibility":"hidden";
+    return (<div style={{visibility:this.props.show?"visibility":"hidden"}} className={`${prefixCls}-header`}>
       <div style={{ position: 'relative' }}>
         {showIf(enablePrev && !showTimePicker,
           <a

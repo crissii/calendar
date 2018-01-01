@@ -212,6 +212,10 @@ const Calendar = createReactClass({
   closeTimePicker() {
     this.onPanelChange(null, 'date');
   },
+  isTime(){
+      let format = this.props.formatter?this.props.formatter:"YYYY-MM-DD HH:mm:ss";
+      return format.indexOf("YYYY")==-1 && format.indexOf("MM")==-1 && format.indexOf("DD")==-1
+  },
   render() {
     const { props, state } = this;
     const {
@@ -225,7 +229,7 @@ const Calendar = createReactClass({
       getTimeConfig(selectedValue, disabledTime) : null;
 
     let timePickerEle = null;
-
+    let display = this.isTime()?false:true;
     if (timePicker && showTimePicker) {
       const timePickerProps = {
         showHour: true,
@@ -247,7 +251,7 @@ const Calendar = createReactClass({
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
-        format={this.getFormat()}
+        format={props.formatter}
         key="date-input"
         value={value}
         locale={locale}
@@ -266,7 +270,7 @@ const Calendar = createReactClass({
       (<div className={`${prefixCls}-panel`} key="panel">
         {dateInputElement}
         <div className={`${prefixCls}-date-panel`}>
-          <CalendarHeader
+          <CalendarHeader show={display}
             locale={locale}
             mode={mode}
             value={value}
@@ -283,7 +287,7 @@ const Calendar = createReactClass({
             </div>)
             : null}
           <div className={`${prefixCls}-body`}>
-            <DateTable
+            <DateTable show={display}
               locale={locale}
               value={value}
               selectedValue={selectedValue}

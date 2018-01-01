@@ -11,7 +11,16 @@ class TimeFooter extends React.Component {
 
   }
 
-  componentWillMount() {
+  isTime(){
+    let format = this.props.format?this.props.format:"YYYY-MM-DD HH:mm:ss";
+    return format.indexOf("YYYY")==-1 && format.indexOf("MM")==-1 && format.indexOf("DD")==-1
+  }
+
+  componentDidMount() {
+    if(this.isTime())
+    {
+      this.clickInput("hour")
+    }
   }
 
   inputValue(timePosition) {
@@ -49,12 +58,23 @@ class TimeFooter extends React.Component {
       s.second(v);
     }
     this.props.onChange(s);
+    //
+    // if(timePosition=="hour" && this.isShow("mm") == "visible")
+    // {
+    //   this.clickInput("min");
+    // }
+    //
+    // if(timePosition=="min" && this.isShow("ss") == "visible")
+    // {
+    //   this.clickInput("second");
+    // }
 
   }
 
   clickInput(timePosition) {
     this.props.onChangeTimePosition(timePosition, this.props.onCloseTimePicker)
     this.props.onOpenTimePicker();
+
   }
 
   isShow(key)
@@ -64,7 +84,8 @@ class TimeFooter extends React.Component {
 
   render() {
     return (<span className="rc-calendar-time">
-      <input style={{visibility:this.isShow("HH")}} className="rc-calendar-time-input" value={this.inputValue("hour")} onFocus={() => {
+      <input style={{visibility:this.isShow("HH")}} className="rc-calendar-time-input"
+             value={this.inputValue("hour")} onFocus={() => {
         this.clickInput("hour")
       }}
               onChange={e => {
