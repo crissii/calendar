@@ -8,6 +8,7 @@ class TimeFooter extends React.Component {
     this.inputValue = this.inputValue.bind(this);
     this.changeValue = this.changeValue.bind(this);
     this.isShow = this.isShow.bind(this);
+    this.contains = this.contains.bind(this);
 
   }
 
@@ -58,6 +59,8 @@ class TimeFooter extends React.Component {
       s.second(v);
     }
     this.props.onChange(s);
+
+
     //
     // if(timePosition=="hour" && this.isShow("mm") == "visible")
     // {
@@ -80,6 +83,11 @@ class TimeFooter extends React.Component {
   isShow(key)
   {
      return this.props.format.indexOf(key)!=-1?"visible":"hidden"
+  }
+
+  contains(key)
+  {
+    return this.props.format.indexOf(key)!=-1;
   }
 
   render() {
