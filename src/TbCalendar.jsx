@@ -17,7 +17,9 @@ class TbCalendar extends React.Component {
         value:"",
         format:"YYYY-MM-DD HH:mm:ss",
         onChange:()=>{},
-        disabled:false
+        disabled:false,
+        disabledDate:()=>{return false},
+        disabledTime:[()=>{return false},()=>{return false},()=>{return false}]
     }
 
     constructor(props) {
@@ -70,7 +72,7 @@ class TbCalendar extends React.Component {
 
         const self = this;
         let {value = "",format = "YYYY-MM-DD HH:mm:ss", onChange = ()=>{}, disabled = false,
-            type,readOnly,...others} = this.props;
+            type,disabledDate,readOnly,disabledTime,...others} = this.props;
 
         const timePickerElement = <TbTimePicker format={format}
                                                 {...state}
@@ -101,6 +103,8 @@ class TbCalendar extends React.Component {
             showDateInput={true}
             onSelect={(v) =>{onChange && onChange(v && v.format(format) || "")}}
             renderFooter={self.isShowTime()?renderFooter:()=>{}}
+            disabledDate={this.props.disabledDate}
+            disabledTime={this.props.disabledTime}
         />));
 
         return (

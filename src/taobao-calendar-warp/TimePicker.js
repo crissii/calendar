@@ -125,7 +125,7 @@ class Panel extends React.Component {
       prefixCls, className, placeholder, disabledHours, disabledMinutes,
       disabledSeconds, hideDisabledOptions, allowEmpty, showHour, showMinute, showSecond,
       format, defaultOpenValue, clearText, onEsc, addon, use12Hours, onClear,
-      focusOnOpen, onKeyDown, hourStep, minuteStep, secondStep, timePosition
+      focusOnOpen, onKeyDown, hourStep, minuteStep, secondStep, timePosition,disabledTime
     } = this.props;
 
    let {current,label,arr,selected} = this.getMetaData();
@@ -143,7 +143,24 @@ class Panel extends React.Component {
      }
      return cls;
    }
-
+    let disabled = null;
+    if(!disabledTime)
+    {
+      disabled = () =>{return false};
+    }else {
+      if(timePosition == "hour")
+      {
+        disabled = disabledTime()[0];
+      }
+      if(timePosition == "min")
+      {
+        disabled = disabledTime()[1];
+      }
+      if(timePosition == "second")
+      {
+        disabled = disabledTime()[2];
+      }
+    }
 
     let self = this;
     return (<div className="rc-calendar-time-panel">
@@ -157,8 +174,12 @@ class Panel extends React.Component {
                         {item.map((m,i)=>{
                           return (
                             <td key={"td"+i} className ="rc-calendar-time-panel-cell">
-                                    <a onClick={e=>{self.clickMe(m)}} className={getCellClass(m,current,selected)}>{m}</a>
-                                  </td>)
+                              {!disabled(m,timePosition)?
+                               <a onClick={e=>{self.clickMe(m)}} className={getCellClass(m,current,selected)}>{m}</a>:
+                               <label style={{color:"#bbb"}}>{m}</label>
+                              }
+
+                            </td>)
                         })}
                     </tr>);
           })}
